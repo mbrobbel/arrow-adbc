@@ -285,7 +285,7 @@ pub trait Connection: Optionable<Option = OptionConnection> {
         table_name: Option<&str>,
         table_type: Option<Vec<&str>>,
         column_name: Option<&str>,
-    ) -> Result<impl RecordBatchReader + Send>;
+    ) -> Result<impl RecordBatchReader + Send + '_>;
 
     /// Get the Arrow schema of a table.
     ///

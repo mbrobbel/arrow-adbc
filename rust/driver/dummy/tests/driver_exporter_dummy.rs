@@ -479,15 +479,15 @@ fn test_connection_get_objects() {
 struct BoxedReaderConnection(DummyConnection);
 
 impl BoxedReaderConnection {
-    pub fn get_objects<'a>(
-        &'a self,
+    pub fn get_objects(
+        &self,
         depth: ObjectDepth,
-        catalog: Option<&'a str>,
-        db_schema: Option<&'a str>,
-        table_name: Option<&'a str>,
-        table_type: Option<Vec<&'a str>>,
-        column_name: Option<&'a str>,
-    ) -> Result<Box<dyn RecordBatchReader + Send + 'a>> {
+        catalog: Option<&str>,
+        db_schema: Option<&str>,
+        table_name: Option<&str>,
+        table_type: Option<Vec<&str>>,
+        column_name: Option<&str>,
+    ) -> Result<Box<dyn RecordBatchReader + Send + '_>> {
         let reader = self.0.get_objects(
             depth,
             catalog,
@@ -496,7 +496,7 @@ impl BoxedReaderConnection {
             table_type,
             column_name,
         )?;
-        let boxed_reader: Box<dyn RecordBatchReader + Send + 'a> = Box::new(reader);
+        let boxed_reader = Box::new(reader);
         Ok(boxed_reader)
     }
 }

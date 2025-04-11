@@ -404,7 +404,7 @@ impl Connection for DummyConnection {
         _table_name: Option<&str>,
         _table_type: Option<Vec<&str>>,
         _column_name: Option<&str>,
-    ) -> Result<impl RecordBatchReader> {
+    ) -> Result<impl RecordBatchReader + '_> {
         let constraint_column_usage_array_inner = StructArray::from(vec![
             (
                 Arc::new(Field::new("fk_catalog", DataType::Utf8, true)),
